@@ -1,0 +1,50 @@
+﻿@page
+@model BludataTeste.Pages.Fornecedores.IndexModel
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="card">
+    <form method="post">
+        <div class="card-header">
+            Fornecedores Cadastrados
+            <div class="row">
+                <div class="col-md-6">
+                    <input id="buscar" name="buscar" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                    <input type="date" id="date" name="date" class="form-control" />
+                </div>
+            </div>
+            <div class="py-lg-3">
+                <button type="submit" class=" btn btn-primary">Buscar</button>
+            </div>
+        </div>
+    </form>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>CNPJ</th>
+                    <th>Criado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Fornecedores)
+                {
+                    <tr>
+                        <th>@item.ID</th>
+                        <td id="nome">@item.Nome</td>
+                        <td id="cpf">@item.CPF</td>
+                        <td id="cnpj">@item.CNPJ</td>
+                        <td id="data">@item.Create</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,99 @@
+﻿@page
+@model BludataTeste.Pages.Fornecedores.CreateModel
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="card">
+    <div class="card-header">
+        Cadastro Fornecedor
+    </div>
+    <div class="card-body">
+        <form method="post" id="create">
+            <div class="form-group">
+                <label for="empresa">Empresa</label>
+                <select asp-for="Fornecedor.EmpresaID" class="form-control select2" asp-items="ViewBag.EmpresaID">
+                    <option selected hidden>Nenhum</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="name">Nome</label>
+                <input type="text" class="form-control" asp-for="Fornecedor.Nome">
+            </div>
+            <div class="row col-8">
+                <div class="form-check col-md-3">
+                    <input class="form-check-input" type="radio" onfocus="focusCNPJ()" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                    <label class="form-check-label" for="exampleRadios1">
+                        CNPJ
+                    </label>
+                </div>
+                <div class="form-check col-md-3">
+                    <input class="form-check-input" type="radio" onfocus="focusCPF()" name="exampleRadios" id="exampleRadios2" value="option2">
+                    <label class="form-check-label" for="exampleRadios2">
+                        CPF
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cpf">CPF</label>
+                <input type="text" class="form-control" id="cpf" asp-for="Fornecedor.CPF" readonly>
+            </div>
+            <div class="form-group">
+                <label for="cnpj">CNPJ</label>
+                <input type="text" class="form-control" id="cnpj" asp-for="Fornecedor.CNPJ">
+            </div>
+            <div class="form-group">
+                <label for="rg">RG</label>
+                <input type="text" class="form-control" id="rg" asp-for="Fornecedor.RG" readonly>
+            </div>
+            <div class="form-group">
+                <label for="date">Data Nascimento</label>
+                <input type="date" class="form-control" onblur="verificarData()" asp-for="Fornecedor.DataNasc" id="soliData" readonly>
+            </div>
+            <div class="form-group">
+                <label for="fone">Telefone</label>
+                <input type="text" class="form-control" asp-for="Fornecedor.Telefone" id="fone">
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="this.disabled = true; create.submit();" id="button">Salvar</button>
+        </form>
+    </div>
+</div>
+<script src="~/js/sweetalert.js"></script>
+<script>
+    //$("#data").mask("99/99/9999");
+    $('#rg').mask('99.999.999-9');
+    $('#cpf').mask('000.000.000-00', { reverse: true });
+    $('#cnpj').mask('00.000.000/0000-00', { reverse: true });
+    $('#fone').mask('(00) 00000-0000');
+
+    function focusCNPJ() {
+        $('#cnpj').prop('readonly', false);
+        $('#cpf').prop('readonly', true);
+        $('#rg').prop('readonly', true);
+        $('#soliData').prop('readonly', true);
+    }
+    function focusCPF() {
+        $('#cpf').prop('readonly', false);
+        $('#rg').prop('readonly', false);
+        $('#soliData').prop('readonly', false);
+        $('#cnpj').prop('readonly', true);
+    }
+
+</script>
+@if (!string.IsNullOrEmpty((string)ViewData["Alert"]))
+{
+    <script>
+        $.toast().reset('all');
+        $("body").removeAttr('class');
+        $.toast({
+            heading: 'Ocorreu um erro!',
+            text: '@Html.Raw(ViewData["Alert"].ToString())',
+            position: 'top-right',
+            loaderBg: '#fec107',
+            icon: 'error',
+            hideAfter: 3500
+        });
+    </script>
+}

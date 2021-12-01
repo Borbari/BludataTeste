@@ -1,0 +1,77 @@
+﻿@page
+@model BludataTeste.Pages.Empresas.CreateModel
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="card">
+    <div class="card-header">
+        Cadastro Empresa
+    </div>
+    <div class="card-body">
+        <form method="post" id="create">
+            <div class="form-group">
+                <label for="name">Nome fantasia</label>
+                <input type="text" class="form-control" asp-for="Empresa.Nome">
+            </div>
+            <div class="form-group">
+                <label for="cnpj">CNPJ</label>
+                <input type="text" class="form-control" id="cnpj" asp-for="Empresa.CNPJ">
+            </div>
+            <div class="form-group">
+                <label for="uf">UF</label>
+                <select class="form-control" id="uf" asp-for="Empresa.UF">
+                    <option selected hidden>Escolha o Estado</option>
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AP">Amapá</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceará</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espírito Santo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="PA">Pará</option>
+                    <option value="PB">Paraíba</option>
+                    <option value="PR">Paraná</option>
+                    <option value="PE">Pernambuco</option>
+                    <option value="PI">Piauí</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="RO">Rondônia</option>
+                    <option value="RR">Roraima</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="TO">Tocantins</option>
+                    <option value="EX">Estrangeiro</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="this.disabled = true; create.submit();">Salvar</button>
+        </form>
+    </div>
+</div>
+<script>
+    $('#cnpj').mask('00.000.000/0000-00', { reverse: true });
+</script>
+@if (!string.IsNullOrEmpty((string)ViewData["Alert"]))
+{
+    <script>
+        $.toast().reset('all');
+        $("body").removeAttr('class');
+        $.toast({
+            heading: 'Ocorreu um erro!',
+            text: '@Html.Raw(ViewData["Alert"].ToString())',
+            position: 'top-right',
+            loaderBg: '#fec107',
+            icon: 'error',
+            hideAfter: 3500
+        });
+    </script>
+}
